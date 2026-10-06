@@ -1,0 +1,2527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>QuestCheck | Student Dashboard</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(
+                    circle at top right,
+                    #182449 0%,
+                    #080d1b 45%,
+                    #050914 100%
+                );
+            color: #f8fafc;
+            min-height: 100vh;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .main-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            background: rgba(8, 13, 27, 0.96);
+
+            border-bottom: 1px solid #26334d;
+
+            backdrop-filter: blur(15px);
+        }
+
+        .header-inner {
+            width: 90%;
+            max-width: 1400px;
+            margin: auto;
+
+            min-height: 78px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: linear-gradient(
+                135deg,
+                #4f46e5,
+                #7c3aed
+            );
+
+            border-radius: 12px;
+
+            font-size: 22px;
+        }
+
+        .logo h1 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .logo p {
+            margin: 4px 0 0;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        /* NAVIGATION */
+
+        .top-navigation {
+            display: flex;
+            gap: 8px;
+        }
+
+        .top-navigation a {
+            text-decoration: none;
+
+            color: #cbd5e1;
+
+            padding: 11px 16px;
+
+            border-radius: 10px;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            border: 1px solid transparent;
+
+            transition: 0.2s;
+        }
+
+        .top-navigation a:hover {
+            background: #18243b;
+            color: white;
+        }
+
+        /* ACTIVE STUDENT BUTTON */
+
+        .top-navigation a.student-active {
+            background: #2563eb;
+            color: white;
+
+            border-color: #3b82f6;
+
+            box-shadow:
+                0 0 18px rgba(
+                    37,
+                    99,
+                    235,
+                    0.35
+                );
+        }
+
+        /* TEACHER NORMAL */
+
+        .top-navigation a.teacher-button {
+            background: #18243b;
+        }
+
+        .top-navigation a.teacher-button:hover {
+            background: #2563eb;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .container {
+            width: 90%;
+            max-width: 1400px;
+
+            margin: 30px auto 70px;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(30, 41, 72, 0.9),
+                    rgba(15, 23, 42, 0.9)
+                );
+
+            border: 1px solid #26334d;
+
+            border-radius: 22px;
+
+            padding: 32px;
+
+            margin-bottom: 24px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+
+            padding: 7px 12px;
+
+            background: #1e2b55;
+
+            color: #93c5fd;
+
+            border-radius: 20px;
+
+            font-size: 11px;
+
+            font-weight: 800;
+        }
+
+        .hero h2 {
+            margin: 14px 0 8px;
+
+            font-size: 35px;
+        }
+
+        .hero p {
+            color: #94a3b8;
+
+            line-height: 1.6;
+
+            max-width: 800px;
+        }
+
+        /* =========================
+           STATISTICS
+        ========================= */
+
+        .dashboard-stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap: 14px;
+
+            margin-bottom: 24px;
+        }
+
+        .dashboard-stat {
+            background: #111827;
+
+            border: 1px solid #26334d;
+
+            border-radius: 17px;
+
+            padding: 18px;
+        }
+
+        .dashboard-stat span {
+            color: #94a3b8;
+
+            font-size: 13px;
+        }
+
+        .dashboard-stat strong {
+            display: block;
+
+            margin-top: 7px;
+
+            font-size: 27px;
+        }
+
+        /* =========================
+           CARD
+        ========================= */
+
+        .card {
+            background: #111827;
+
+            border: 1px solid #26334d;
+
+            border-radius: 20px;
+
+            padding: 25px;
+
+            margin-bottom: 24px;
+        }
+
+        .card-heading {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+        .card-heading h2 {
+            margin: 0;
+        }
+
+        .card-heading p {
+            margin: 6px 0 0;
+
+            color: #94a3b8;
+        }
+
+        /* =========================
+           WRITING ANALYSIS
+        ========================= */
+
+        .writing-box {
+            background: #0b1324;
+
+            border: 1px solid #334155;
+
+            border-radius: 15px;
+
+            padding: 18px;
+        }
+
+        textarea,
+        input[type="text"] {
+
+            width: 100%;
+
+            background: #080f20;
+
+            border: 1px solid #334155;
+
+            color: white;
+
+            border-radius: 11px;
+
+            padding: 14px;
+
+            font-size: 14px;
+
+            font-family: inherit;
+
+            outline: none;
+
+        }
+
+        textarea {
+            min-height: 210px;
+
+            resize: vertical;
+        }
+
+        textarea:focus,
+        input[type="text"]:focus {
+
+            border-color: #3b82f6;
+
+            box-shadow:
+                0 0 0 2px
+                rgba(59, 130, 246, 0.12);
+
+        }
+
+        .button {
+
+            display: inline-block;
+
+            border: 0;
+
+            background: #2563eb;
+
+            color: white;
+
+            padding: 13px 21px;
+
+            border-radius: 10px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            margin-top: 12px;
+
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        .analysis-result {
+            display: none;
+
+            margin-top: 18px;
+        }
+
+        .analysis-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(6, 1fr);
+
+            gap: 10px;
+
+        }
+
+        .analysis-item {
+
+            background: #111c31;
+
+            border: 1px solid #26334d;
+
+            border-radius: 12px;
+
+            padding: 14px;
+
+        }
+
+        .analysis-item span {
+
+            display: block;
+
+            color: #94a3b8;
+
+            font-size: 12px;
+
+        }
+
+        .analysis-item strong {
+
+            display: block;
+
+            margin-top: 6px;
+
+            font-size: 18px;
+
+        }
+
+        .suggestions {
+
+            background: #111c31;
+
+            border-radius: 12px;
+
+            margin-top: 12px;
+
+            padding: 15px;
+
+        }
+
+        .suggestions ul {
+            margin-bottom: 0;
+        }
+
+        .suggestions li {
+            margin: 7px 0;
+            color: #cbd5e1;
+        }
+
+        /* =========================
+           ASSIGNMENT INPUT
+        ========================= */
+
+        .assignment-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 18px;
+
+        }
+
+        .assignment-card {
+
+            background: #0b1324;
+
+            border: 1px solid #334155;
+
+            border-radius: 16px;
+
+            padding: 20px;
+
+        }
+
+        .assignment-title {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 15px;
+
+        }
+
+        .assignment-title h3 {
+            margin: 0;
+        }
+
+        .assignment-number {
+
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            width: 34px;
+            height: 34px;
+
+            background: #1e3a8a;
+
+            color: #93c5fd;
+
+            border-radius: 9px;
+
+            margin-right: 8px;
+
+            font-size: 12px;
+
+            font-weight: 900;
+
+        }
+
+        .required {
+
+            color: #fbbf24;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+        }
+
+        .file-row {
+
+            margin-top: 12px;
+
+            color: #94a3b8;
+
+            font-size: 12px;
+
+        }
+
+        .file-row input {
+            margin-top: 8px;
+            width: 100%;
+        }
+
+        .check-button-area {
+
+            text-align: center;
+
+            margin-top: 20px;
+
+        }
+
+        /* =========================
+           RESULT
+        ========================= */
+
+        .result-section {
+
+            background: #111827;
+
+            border: 1px solid #26334d;
+
+            border-radius: 22px;
+
+            padding: 25px;
+
+            margin-bottom: 24px;
+
+        }
+
+        .result-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 22px;
+
+        }
+
+        .result-header h2 {
+            margin: 0;
+        }
+
+        .result-date {
+
+            color: #64748b;
+
+            font-size: 12px;
+
+            margin-top: 5px;
+
+        }
+
+        .classification {
+
+            padding: 8px 14px;
+
+            border-radius: 20px;
+
+            font-weight: 900;
+
+            font-size: 12px;
+
+        }
+
+        .classification.high {
+            background: #451a1a;
+            color: #fb7185;
+        }
+
+        .classification.moderate {
+            background: #422006;
+            color: #fbbf24;
+        }
+
+        .classification.low {
+            background: #052e16;
+            color: #4ade80;
+        }
+
+        /* BIG RESULT */
+
+        .result-main {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #101b35,
+                    #0c1427
+                );
+
+            border: 1px solid #334155;
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 30px;
+
+            margin-bottom: 20px;
+
+        }
+
+        .result-main small {
+            color: #94a3b8;
+        }
+
+        .big-score {
+
+            display: block;
+
+            font-size: 56px;
+
+            font-weight: 900;
+
+            margin-top: 8px;
+
+            color: #60a5fa;
+
+        }
+
+        .score-description {
+
+            color: #94a3b8;
+
+            margin: 5px 0 0;
+
+        }
+
+        .score-circle {
+
+            width: 130px;
+
+            height: 130px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                radial-gradient(
+                    circle,
+                    #111827 55%,
+                    #2563eb 56%,
+                    #1d4ed8 68%,
+                    #111827 69%
+                );
+
+            font-weight: 900;
+
+            font-size: 22px;
+
+            color: #93c5fd;
+
+        }
+
+        /* =========================
+           BREAKDOWN
+        ========================= */
+
+        .breakdown-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 14px;
+
+            margin-bottom: 20px;
+
+        }
+
+        .breakdown-card {
+
+            background: #0b1324;
+
+            border: 1px solid #334155;
+
+            border-radius: 14px;
+
+            padding: 18px;
+
+        }
+
+        .breakdown-card span {
+
+            color: #94a3b8;
+
+            font-size: 13px;
+
+        }
+
+        .breakdown-card strong {
+
+            display: block;
+
+            font-size: 30px;
+
+            margin: 7px 0;
+
+        }
+
+        .breakdown-card small {
+            color: #64748b;
+        }
+
+        .progress {
+
+            width: 100%;
+
+            height: 9px;
+
+            background: #1e293b;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+
+            margin: 12px 0;
+
+        }
+
+        .progress div {
+
+            height: 100%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            border-radius: 20px;
+
+        }
+
+        .formula {
+
+            background: #0b1324;
+
+            border: 1px solid #26334d;
+
+            border-radius: 12px;
+
+            padding: 14px;
+
+            color: #94a3b8;
+
+            margin-bottom: 15px;
+
+        }
+
+        .ai-explanation {
+
+            background: #101c35;
+
+            border-left: 4px solid #3b82f6;
+
+            padding: 15px;
+
+            border-radius: 10px;
+
+            color: #cbd5e1;
+
+        }
+
+        .ai-explanation strong {
+            color: white;
+        }
+
+        /* =========================
+           STATISTICS
+        ========================= */
+
+        .assignment-stat-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 12px;
+
+            margin-bottom: 25px;
+
+        }
+
+        .assignment-stat {
+
+            background: #0b1324;
+
+            border: 1px solid #334155;
+
+            border-radius: 13px;
+
+            padding: 17px;
+
+        }
+
+        .assignment-stat span {
+
+            display: block;
+
+            color: #94a3b8;
+
+            font-size: 12px;
+
+        }
+
+        .assignment-stat strong {
+
+            display: block;
+
+            font-size: 24px;
+
+            margin-top: 6px;
+
+        }
+
+        /* =========================
+           MATCHES
+        ========================= */
+
+        .matches {
+
+            margin-top: 25px;
+
+        }
+
+        .match-card {
+
+            background: #0b1324;
+
+            border: 1px solid #334155;
+
+            border-radius: 15px;
+
+            padding: 18px;
+
+            margin-bottom: 14px;
+
+        }
+
+        .match-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 14px;
+
+        }
+
+        .match-score {
+
+            font-size: 24px;
+
+            font-weight: 900;
+
+            color: #fbbf24;
+
+        }
+
+        .match-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 40px 1fr;
+
+            gap: 12px;
+
+            align-items: stretch;
+
+        }
+
+        .passage {
+
+            background: #101a2d;
+
+            border: 1px solid #26334d;
+
+            border-radius: 11px;
+
+            padding: 14px;
+
+            line-height: 1.6;
+
+            color: #cbd5e1;
+
+        }
+
+        .passage-title {
+
+            color: #93c5fd;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            margin-bottom: 8px;
+
+        }
+
+        .match-arrow {
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            color: #60a5fa;
+
+            font-size: 25px;
+
+        }
+
+        mark {
+
+            background: #facc15;
+
+            color: #111827;
+
+            padding: 2px 4px;
+
+            border-radius: 3px;
+
+        }
+
+        .no-matches {
+
+            text-align: center;
+
+            padding: 30px;
+
+            background: #0b1324;
+
+            border-radius: 14px;
+
+            color: #94a3b8;
+
+        }
+
+        /* =========================
+           PDF
+        ========================= */
+
+        .download-area {
+
+            text-align: center;
+
+            margin-top: 25px;
+
+        }
+
+        .download-button {
+
+            display: inline-block;
+
+            text-decoration: none;
+
+            background: #2563eb;
+
+            color: white;
+
+            padding: 14px 22px;
+
+            border-radius: 11px;
+
+            font-weight: 900;
+
+        }
+
+        .download-button:hover {
+
+            background: #1d4ed8;
+
+        }
+
+        /* =========================
+           REPORTS
+        ========================= */
+
+        .reports-table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+        }
+
+        .reports-table th {
+
+            color: #94a3b8;
+
+            font-size: 12px;
+
+            text-align: left;
+
+            padding: 13px;
+
+            border-bottom: 1px solid #26334d;
+
+        }
+
+        .reports-table td {
+
+            padding: 13px;
+
+            border-bottom: 1px solid #26334d;
+
+            color: #cbd5e1;
+
+        }
+
+        .table-wrapper {
+
+            overflow-x: auto;
+
+        }
+
+        .table-action {
+
+            display: inline-block;
+
+            padding: 7px 10px;
+
+            border-radius: 8px;
+
+            background: #243047;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            margin-right: 5px;
+
+        }
+
+        .table-action:hover {
+
+            background: #2563eb;
+
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1100px) {
+
+            .dashboard-stats {
+
+                grid-template-columns:
+                    repeat(3, 1fr);
+
+            }
+
+            .analysis-grid {
+
+                grid-template-columns:
+                    repeat(3, 1fr);
+
+            }
+
+            .assignment-stat-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+        @media (max-width: 800px) {
+
+            .header-inner {
+
+                flex-direction: column;
+
+                padding: 15px 0;
+
+            }
+
+            .assignment-grid,
+            .breakdown-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .result-main {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+            }
+
+            .match-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .match-arrow {
+
+                transform: rotate(90deg);
+
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .dashboard-stats {
+
+                grid-template-columns: 1fr 1fr;
+
+            }
+
+            .analysis-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+            .assignment-stat-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .top-navigation {
+
+                width: 100%;
+
+            }
+
+            .top-navigation a {
+
+                flex: 1;
+
+                text-align: center;
+
+            }
+
+            .hero h2 {
+
+                font-size: 27px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="main-header">
+
+    <div class="header-inner">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🤖
+            </div>
+
+            <div>
+
+                <h1>
+                    QuestCheck
+                </h1>
+
+                <p>
+                    AI Assignment Plagiarism Checker
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!--
+            STUDENT IS ACTIVE ON THIS PAGE.
+            TEACHER IS NOT ACTIVE.
+        -->
+
+        <nav class="top-navigation">
+
+            <a
+                href="/"
+                class="student-active"
+            >
+                👨‍🎓 Student
+            </a>
+
+
+            <a
+                href="/teacher"
+                class="teacher-button"
+            >
+                👨‍🏫 Teacher Dashboard
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+    <span class="hero-badge">
+        AI POWERED
+    </span>
+
+    <h2>
+        Smart Assignment Plagiarism Detection
+    </h2>
+
+    <p>
+        Compare assignments using TF-IDF and AI semantic
+        similarity. Identify matching passages and download
+        a detailed plagiarism report.
+    </p>
+
+</section>
+
+
+<!-- =========================================================
+     DASHBOARD STATISTICS
+========================================================= -->
+
+<section class="dashboard-stats">
+
+    <div class="dashboard-stat">
+
+        <span>
+            Total Reports
+        </span>
+
+        <strong>
+            {{ total|default(0, true) }}
+        </strong>
+
+    </div>
+
+
+    <div class="dashboard-stat">
+
+        <span>
+            High Similarity
+        </span>
+
+        <strong>
+            {{ high|default(0, true) }}
+        </strong>
+
+    </div>
+
+
+    <div class="dashboard-stat">
+
+        <span>
+            Moderate
+        </span>
+
+        <strong>
+            {{ moderate|default(0, true) }}
+        </strong>
+
+    </div>
+
+
+    <div class="dashboard-stat">
+
+        <span>
+            Low Similarity
+        </span>
+
+        <strong>
+            {{ low|default(0, true) }}
+        </strong>
+
+    </div>
+
+
+    <div class="dashboard-stat">
+
+        <span>
+            Average Similarity
+        </span>
+
+        <strong>
+            {{ average|default(0, true) }}%
+        </strong>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     WRITING ANALYSIS
+========================================================= -->
+
+<section class="card">
+
+    <div class="card-heading">
+
+        <div>
+
+            <h2>
+                ✍️ Student Writing Analysis
+            </h2>
+
+            <p>
+                Analyze your writing before checking plagiarism.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="writing-box">
+
+        <textarea
+            id="studentText"
+            placeholder="Paste your assignment here..."
+        ></textarea>
+
+
+        <button
+            type="button"
+            class="button"
+            onclick="analyzeStudentWriting()"
+        >
+            🧠 Analyze My Writing
+        </button>
+
+
+        <div
+            id="analysisResult"
+            class="analysis-result"
+        >
+
+            <div class="analysis-grid">
+
+                <div class="analysis-item">
+
+                    <span>
+                        Words
+                    </span>
+
+                    <strong id="analysisWords">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="analysis-item">
+
+                    <span>
+                        Sentences
+                    </span>
+
+                    <strong id="analysisSentences">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="analysis-item">
+
+                    <span>
+                        Characters
+                    </span>
+
+                    <strong id="analysisCharacters">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="analysis-item">
+
+                    <span>
+                        Avg Sentence
+                    </span>
+
+                    <strong id="analysisAverage">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="analysis-item">
+
+                    <span>
+                        Readability
+                    </span>
+
+                    <strong id="analysisReadability">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="analysis-item">
+
+                    <span>
+                        Citations
+                    </span>
+
+                    <strong id="analysisCitations">
+                        -
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="suggestions">
+
+                <strong>
+                    💡 Writing Suggestions
+                </strong>
+
+                <ul id="suggestionList"></ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     PLAGIARISM CHECKER
+========================================================= -->
+
+<section class="card">
+
+    <div class="card-heading">
+
+        <div>
+
+            <h2>
+                🔍 New Plagiarism Check
+            </h2>
+
+            <p>
+                Compare two assignments using TF-IDF and AI semantic analysis.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% for category, message in messages %}
+
+            <div
+                style="
+                    background:#451a1a;
+                    border:1px solid #7f1d1d;
+                    padding:13px;
+                    border-radius:10px;
+                    margin-bottom:15px;
+                    color:#fecaca;
+                "
+            >
+
+                {{ message }}
+
+            </div>
+
+        {% endfor %}
+
+    {% endwith %}
+
+
+    <form
+        action="/check"
+        method="POST"
+        enctype="multipart/form-data"
+    >
+
+        <div class="assignment-grid">
+
+
+            <!-- ASSIGNMENT 1 -->
+
+            <div class="assignment-card">
+
+                <div class="assignment-title">
+
+                    <div>
+
+                        <span class="assignment-number">
+                            01
+                        </span>
+
+                        <strong>
+                            Assignment 1
+                        </strong>
+
+                    </div>
+
+                    <span class="required">
+                        Required
+                    </span>
+
+                </div>
+
+
+                <input
+                    type="text"
+                    name="assignment1_name"
+                    value="{{ assignment1_name|default('', true) }}"
+                    placeholder="Assignment 1 name"
+                >
+
+
+                <br><br>
+
+
+                <textarea
+                    name="assignment1_text"
+                    placeholder="Paste Assignment 1 text here..."
+                ></textarea>
+
+
+                <div class="file-row">
+
+                    📎 Upload TXT, PDF or DOCX
+
+                    <input
+                        type="file"
+                        name="assignment1_file"
+                        accept=".txt,.pdf,.docx"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- ASSIGNMENT 2 -->
+
+            <div class="assignment-card">
+
+                <div class="assignment-title">
+
+                    <div>
+
+                        <span class="assignment-number">
+                            02
+                        </span>
+
+                        <strong>
+                            Assignment 2
+                        </strong>
+
+                    </div>
+
+                    <span class="required">
+                        Required
+                    </span>
+
+                </div>
+
+
+                <input
+                    type="text"
+                    name="assignment2_name"
+                    value="{{ assignment2_name|default('', true) }}"
+                    placeholder="Assignment 2 name"
+                >
+
+
+                <br><br>
+
+
+                <textarea
+                    name="assignment2_text"
+                    placeholder="Paste Assignment 2 text here..."
+                ></textarea>
+
+
+                <div class="file-row">
+
+                    📎 Upload TXT, PDF or DOCX
+
+                    <input
+                        type="file"
+                        name="assignment2_file"
+                        accept=".txt,.pdf,.docx"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="check-button-area">
+
+            <button
+                type="submit"
+                class="button"
+            >
+                🤖 Check Plagiarism
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+
+
+<!-- =========================================================
+     RESULT
+========================================================= -->
+
+{% if latest %}
+
+<section class="result-section">
+
+
+    <!-- RESULT HEADER -->
+
+    <div class="result-header">
+
+        <div>
+
+            <h2>
+                📊 Plagiarism Result
+            </h2>
+
+            <div class="result-date">
+
+                Report #{{ latest.id }}
+
+                ·
+
+                {{ latest.created_at }}
+
+            </div>
+
+        </div>
+
+
+        <span
+            class="classification
+            {% if latest.classification == 'High' %}
+                high
+            {% elif latest.classification == 'Moderate' %}
+                moderate
+            {% else %}
+                low
+            {% endif %}
+            "
+        >
+
+            {{ latest.classification }}
+
+            Similarity
+
+        </span>
+
+    </div>
+
+
+    <!-- BIG SCORE -->
+
+    <div class="result-main">
+
+        <div>
+
+            <small>
+                Final Combined Similarity
+            </small>
+
+            <strong class="big-score">
+                {{ combined_similarity }}%
+            </strong>
+
+            <p class="score-description">
+
+                40% TF-IDF + 60% AI Semantic Similarity
+
+            </p>
+
+        </div>
+
+
+        <div class="score-circle">
+
+            {{ combined_similarity }}%
+
+        </div>
+
+    </div>
+
+
+    <!-- BREAKDOWN -->
+
+    <div class="breakdown-grid">
+
+
+        <div class="breakdown-card">
+
+            <span>
+                TF-IDF Similarity
+            </span>
+
+            <strong>
+                {{ tfidf_similarity }}%
+            </strong>
+
+            <small>
+                Word and phrase similarity
+            </small>
+
+            <div class="progress">
+
+                <div
+                    style="
+                        width:{{ tfidf_similarity }}%;
+                    "
+                ></div>
+
+            </div>
+
+            <small>
+                Weight: 40%
+            </small>
+
+        </div>
+
+
+        <div class="breakdown-card">
+
+            <span>
+                AI Semantic Similarity
+            </span>
+
+            <strong>
+                {{ semantic_similarity }}%
+            </strong>
+
+            <small>
+                Meaning and paraphrase similarity
+            </small>
+
+            <div class="progress">
+
+                <div
+                    style="
+                        width:{{ semantic_similarity }}%;
+                    "
+                ></div>
+
+            </div>
+
+            <small>
+                Weight: 60%
+            </small>
+
+        </div>
+
+
+        <div class="breakdown-card">
+
+            <span>
+                Final Result
+            </span>
+
+            <strong>
+                {{ combined_similarity }}%
+            </strong>
+
+            <small>
+                Combined score
+            </small>
+
+            <div class="progress">
+
+                <div
+                    style="
+                        width:{{ combined_similarity }}%;
+                    "
+                ></div>
+
+            </div>
+
+            <small>
+                {{ latest.classification }} Risk
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <!-- EXPLANATION -->
+
+    <div class="ai-explanation">
+
+        <strong>
+            🤖 What does this result mean?
+        </strong>
+
+
+        {% if latest.classification == "High" %}
+
+        <p>
+            The system detected a high level of similarity.
+            Review the matching passages carefully and verify
+            the original sources.
+        </p>
+
+        {% elif latest.classification == "Moderate" %}
+
+        <p>
+            The system detected moderate similarity.
+            Some wording or ideas may be shared, so review
+            the matching passages and citations.
+        </p>
+
+        {% else %}
+
+        <p>
+            The system detected low similarity.
+            This indicates relatively little overlap between
+            the two assignments.
+        </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- ASSIGNMENT STATISTICS -->
+
+    <div style="margin-top:25px;">
+
+        <h3>
+            📝 Assignment Statistics
+        </h3>
+
+
+        <div class="assignment-stat-grid">
+
+
+            <div class="assignment-stat">
+
+                <span>
+                    Assignment 1 Words
+                </span>
+
+                <strong>
+                    {{ writing_analysis1.word_count }}
+                </strong>
+
+            </div>
+
+
+            <div class="assignment-stat">
+
+                <span>
+                    Assignment 2 Words
+                </span>
+
+                <strong>
+                    {{ writing_analysis2.word_count }}
+                </strong>
+
+            </div>
+
+
+            <div class="assignment-stat">
+
+                <span>
+                    Assignment 1 Sentences
+                </span>
+
+                <strong>
+                    {{ writing_analysis1.sentence_count }}
+                </strong>
+
+            </div>
+
+
+            <div class="assignment-stat">
+
+                <span>
+                    Assignment 2 Sentences
+                </span>
+
+                <strong>
+                    {{ writing_analysis2.sentence_count }}
+                </strong>
+
+            </div>
+
+
+            <div class="assignment-stat">
+
+                <span>
+                    Assignment 1 Readability
+                </span>
+
+                <strong>
+                    {{ writing_analysis1.readability }}
+                </strong>
+
+            </div>
+
+
+            <div class="assignment-stat">
+
+                <span>
+                    Assignment 2 Readability
+                </span>
+
+                <strong>
+                    {{ writing_analysis2.readability }}
+                </strong>
+
+            </div>
+
+
+            <div class="assignment-stat">
+
+                <span>
+                    Assignment 1 Citations
+                </span>
+
+                <strong>
+
+                    {% if citation_analysis1.has_citations %}
+                        Detected
+                    {% else %}
+                        Not Detected
+                    {% endif %}
+
+                </strong>
+
+            </div>
+
+
+            <div class="assignment-stat">
+
+                <span>
+                    Assignment 2 Citations
+                </span>
+
+                <strong>
+
+                    {% if citation_analysis2.has_citations %}
+                        Detected
+                    {% else %}
+                        Not Detected
+                    {% endif %}
+
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- MATCHING PASSAGES -->
+
+    <div class="matches">
+
+        <h3>
+            🔎 Matching Passages
+        </h3>
+
+
+        {% if semantic_matches and semantic_matches|length > 0 %}
+
+
+            {% for match in semantic_matches %}
+
+            <div class="match-card">
+
+
+                <div class="match-header">
+
+                    <strong>
+                        Match {{ loop.index }}
+                    </strong>
+
+                    <span class="match-score">
+                        {{ match.score }}%
+                    </span>
+
+                </div>
+
+
+                <div class="match-grid">
+
+
+                    <div class="passage">
+
+                        <div class="passage-title">
+                            📄 Assignment 1
+                        </div>
+
+                        {{ match.highlighted1|safe }}
+
+                    </div>
+
+
+                    <div class="match-arrow">
+                        ⇄
+                    </div>
+
+
+                    <div class="passage">
+
+                        <div class="passage-title">
+                            📄 Assignment 2
+                        </div>
+
+                        {{ match.highlighted2|safe }}
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+
+        {% else %}
+
+
+            <div class="no-matches">
+
+                <h3>
+                    ✅ No Significant Matching Passages
+                </h3>
+
+                <p>
+                    The AI engine did not detect strong
+                    sentence-level semantic matches.
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- PDF -->
+
+    <div class="download-area">
+
+        <a
+            class="download-button"
+            href="/download/{{ latest.id }}"
+        >
+            📄 Download Detailed PDF Report
+        </a>
+
+    </div>
+
+</section>
+
+{% endif %}
+
+
+<!-- =========================================================
+     PREVIOUS REPORTS
+========================================================= -->
+
+<section class="card">
+
+    <div class="card-heading">
+
+        <div>
+
+            <h2>
+                📚 Previous Reports
+            </h2>
+
+            <p>
+                Your previous plagiarism checks.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+        <table class="reports-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Assignment 1
+                    </th>
+
+                    <th>
+                        Assignment 2
+                    </th>
+
+                    <th>
+                        Similarity
+                    </th>
+
+                    <th>
+                        Risk
+                    </th>
+
+                    <th>
+                        Date
+                    </th>
+
+                    <th>
+                        Actions
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for report in reports %}
+
+                <tr>
+
+                    <td>
+                        {{ report["assignment1_name"] }}
+                    </td>
+
+                    <td>
+                        {{ report["assignment2_name"] }}
+                    </td>
+
+                    <td>
+                        {{ report["combined_similarity"] }}%
+                    </td>
+
+                    <td>
+                        {{ report["classification"] }}
+                    </td>
+
+                    <td>
+                        {{ report["created_at"] }}
+                    </td>
+
+                    <td>
+
+                        <a
+                            class="table-action"
+                            href="/download/{{ report['id'] }}"
+                        >
+                            PDF
+                        </a>
+
+
+                        <a
+                            class="table-action"
+                            href="/delete/{{ report['id'] }}"
+                            onclick="
+                                return confirm(
+                                    'Delete this report?'
+                                )
+                            "
+                        >
+                            Delete
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% else %}
+
+                <tr>
+
+                    <td
+                        colspan="6"
+                        style="
+                            text-align:center;
+                            padding:30px;
+                            color:#64748b;
+                        "
+                    >
+
+                        No reports yet.
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+
+/* =========================
+   WRITING ANALYSIS
+========================= */
+
+async function analyzeStudentWriting() {
+
+    const text =
+        document
+        .getElementById("studentText")
+        .value
+        .trim();
+
+
+    if (!text) {
+
+        alert(
+            "Please paste your assignment first."
+        );
+
+        return;
+
+    }
+
+
+    const formData =
+        new FormData();
+
+    formData.append(
+        "text",
+        text
+    );
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/analyze-writing",
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            alert(
+                data.message ||
+                "Analysis failed."
+            );
+
+            return;
+
+        }
+
+
+        const analysis =
+            data.analysis;
+
+
+        document
+            .getElementById(
+                "analysisResult"
+            )
+            .style.display = "block";
+
+
+        document
+            .getElementById(
+                "analysisWords"
+            )
+            .textContent =
+            analysis.word_count;
+
+
+        document
+            .getElementById(
+                "analysisSentences"
+            )
+            .textContent =
+            analysis.sentence_count;
+
+
+        document
+            .getElementById(
+                "analysisCharacters"
+            )
+            .textContent =
+            analysis.character_count;
+
+
+        document
+            .getElementById(
+                "analysisAverage"
+            )
+            .textContent =
+            analysis.average_sentence_length;
+
+
+        document
+            .getElementById(
+                "analysisReadability"
+            )
+            .textContent =
+            analysis.readability;
+
+
+        document
+            .getElementById(
+                "analysisCitations"
+            )
+            .textContent =
+            data.citations.has_citations
+                ? "Detected"
+                : "Not Detected";
+
+
+        const list =
+            document.getElementById(
+                "suggestionList"
+            );
+
+
+        list.innerHTML = "";
+
+
+        data.suggestions.forEach(
+            function(suggestion) {
+
+                const li =
+                    document.createElement(
+                        "li"
+                    );
+
+                li.textContent =
+                    suggestion;
+
+                list.appendChild(li);
+
+            }
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Unable to analyze the assignment."
+        );
+
+    }
+
+}
+
+
+/* =========================
+   AUTO SCROLL TO RESULT
+========================= */
+
+{% if latest %}
+
+window.addEventListener(
+    "load",
+    function() {
+
+        const result =
+            document.querySelector(
+                ".result-section"
+            );
+
+        if (result) {
+
+            setTimeout(
+                function() {
+
+                    result.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                },
+                250
+            );
+
+        }
+
+    }
+);
+
+{% endif %}
+
+
+</script>
+
+
+</body>
+
+</html>

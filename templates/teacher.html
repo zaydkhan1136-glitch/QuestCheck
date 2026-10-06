@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Teacher Dashboard | QuestCheck</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #080d1b;
+            color: #f8fafc;
+        }
+
+        header {
+            background: #111827;
+            border-bottom: 1px solid #26334d;
+            padding: 18px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 25px;
+            background: #4f46e5;
+            padding: 10px;
+            border-radius: 12px;
+        }
+
+        .logo h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .logo p {
+            margin: 4px 0 0;
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            background: #2563eb;
+            padding: 11px 17px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 30px auto 70px;
+        }
+
+        .hero,
+        .card,
+        .stat {
+            background: #111827;
+            border: 1px solid #26334d;
+            border-radius: 20px;
+        }
+
+        .hero {
+            padding: 30px;
+            margin-bottom: 22px;
+        }
+
+        .hero h2 {
+            margin: 0 0 8px;
+            font-size: 34px;
+        }
+
+        .muted {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           STATISTICS
+        ========================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .stat {
+            padding: 20px;
+        }
+
+        .stat-title {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .stat-number {
+            display: block;
+            margin-top: 8px;
+            font-size: 30px;
+            font-weight: 900;
+            color: white;
+        }
+
+        .high {
+            color: #fb7185;
+        }
+
+        .moderate {
+            color: #fbbf24;
+        }
+
+        .low {
+            color: #4ade80;
+        }
+
+        /* =========================
+           CARDS
+        ========================= */
+
+        .card {
+            padding: 25px;
+            margin-bottom: 22px;
+        }
+
+        .card h2 {
+            margin: 0 0 7px;
+        }
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        label {
+            display: block;
+            color: #cbd5e1;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            background: #0b1324;
+            border: 1px solid #334155;
+            color: white;
+            border-radius: 11px;
+            padding: 13px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #3b82f6;
+        }
+
+        textarea {
+            min-height: 210px;
+            resize: vertical;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        .btn {
+            border: 0;
+            background: #2563eb;
+            color: white;
+            padding: 14px 22px;
+            border-radius: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 14px;
+            color: #94a3b8;
+            font-size: 12px;
+            border-bottom: 1px solid #26334d;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #26334d;
+            color: #e2e8f0;
+        }
+
+        /* SELECTED STUDENT */
+
+        tr.selected-student {
+            background: rgba(37, 99, 235, 0.28);
+            box-shadow: inset 5px 0 0 #3b82f6;
+        }
+
+        tr.selected-student td {
+            color: white;
+        }
+
+        tr.selected-student td:first-child {
+            font-weight: 900;
+            color: #93c5fd;
+        }
+
+        .selected-badge {
+            display: inline-block;
+            margin-left: 8px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            background: #2563eb;
+            color: white;
+            font-size: 10px;
+            font-weight: 900;
+        }
+
+        .action {
+            display: inline-block;
+            padding: 8px 11px;
+            border-radius: 8px;
+            background: #243047;
+            color: white;
+            text-decoration: none;
+            margin-right: 5px;
+            font-size: 13px;
+        }
+
+        .action:hover {
+            background: #2563eb;
+        }
+
+        .delete {
+            border: 0;
+            background: #7f1d1d;
+            color: white;
+            padding: 8px 11px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        /* =========================
+           COMPARISON
+        ========================= */
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .comparison-card {
+            background: #0b1324;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .comparison-card h3 {
+            margin-top: 0;
+        }
+
+        .comparison-score {
+            font-size: 32px;
+            font-weight: 900;
+            color: #60a5fa;
+        }
+
+        .pill {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            background: #243047;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .error {
+            background: #451a1a;
+            border: 1px solid #7f1d1d;
+            padding: 13px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 1100px) {
+            .stats {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            👨‍🏫
+        </div>
+
+        <div>
+            <h1>Teacher Dashboard</h1>
+            <p>QuestCheck • Assignment Plagiarism Detection</p>
+        </div>
+
+    </div>
+
+    <nav>
+        <a href="/">
+            ← Student Dashboard
+        </a>
+    </nav>
+
+</header>
+
+
+<main class="container">
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <h2>
+            Teacher Dashboard
+        </h2>
+
+        <p class="muted">
+            Monitor student submissions and detect similarity between assignments.
+        </p>
+
+    </section>
+
+
+    <!-- =========================
+         STATISTICS
+    ========================== -->
+
+    <section class="stats">
+
+        <div class="stat">
+
+            <span class="stat-title">
+                Total Submissions
+            </span>
+
+            <span class="stat-number">
+                {{ teacher_total|default(0, true) }}
+            </span>
+
+        </div>
+
+
+        <div class="stat">
+
+            <span class="stat-title">
+                Students
+            </span>
+
+            <span class="stat-number">
+                {{ teacher_students|default(0, true) }}
+            </span>
+
+        </div>
+
+
+        <div class="stat">
+
+            <span class="stat-title">
+                Assignments
+            </span>
+
+            <span class="stat-number">
+                {{ teacher_assignments|default(0, true) }}
+            </span>
+
+        </div>
+
+
+        <div class="stat">
+
+            <span class="stat-title">
+                High Risk
+            </span>
+
+            <span class="stat-number high">
+                {{ teacher_high|default(0, true) }}
+            </span>
+
+        </div>
+
+
+        <div class="stat">
+
+            <span class="stat-title">
+                Moderate Risk
+            </span>
+
+            <span class="stat-number moderate">
+                {{ teacher_moderate|default(0, true) }}
+            </span>
+
+        </div>
+
+
+        <div class="stat">
+
+            <span class="stat-title">
+                Low Risk
+            </span>
+
+            <span class="stat-number low">
+                {{ teacher_low|default(0, true) }}
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         ADD STUDENT
+    ========================== -->
+
+    <section class="card">
+
+        <h2>
+            ➕ Add Student Submission
+        </h2>
+
+        <p class="muted">
+            Use the same assignment name for students who submitted the same assignment.
+            QuestCheck will automatically compare them.
+        </p>
+
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% for category, message in messages %}
+
+                <div class="error">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endwith %}
+
+
+        <form
+            action="/teacher/submit"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <div class="grid">
+
+                <div>
+
+                    <label>
+                        Assignment Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="assignment_name"
+                        placeholder="Example: DBMS Assignment 1"
+                        required
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Student Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="student_name"
+                        placeholder="Example: Zaid Khan"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="full">
+
+                    <label>
+                        Paste Student Submission
+                    </label>
+
+                    <textarea
+                        name="submission_text"
+                        placeholder="Paste the student's assignment here..."
+                    ></textarea>
+
+                </div>
+
+
+                <div class="full">
+
+                    <label>
+                        OR Upload Assignment
+                    </label>
+
+                    <input
+                        type="file"
+                        name="submission_file"
+                        accept=".txt,.pdf,.docx"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <button class="btn" type="submit">
+
+                🔍 Add & Compare Student
+
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <!-- =========================
+         SELECTED STUDENT
+    ========================== -->
+
+    {% if selected_submission %}
+
+    <section class="card">
+
+        <h2>
+            🔎 Student Comparison
+        </h2>
+
+        <p class="muted">
+
+            Selected Student:
+
+            <strong>
+                {{ selected_submission["student_name"] }}
+            </strong>
+
+            <br>
+
+            Assignment:
+
+            <strong>
+                {{ selected_submission["assignment_name"] }}
+            </strong>
+
+        </p>
+
+
+        <p>
+
+            Highest Similarity:
+
+            <strong>
+                {{ selected_submission["similarity_score"] }}%
+            </strong>
+
+            &nbsp; | &nbsp;
+
+            Risk:
+
+            <span class="pill">
+                {{ selected_submission["classification"] }}
+            </span>
+
+            &nbsp; | &nbsp;
+
+            Best Match:
+
+            <strong>
+                {{ selected_submission["best_match_student"] or "None" }}
+            </strong>
+
+        </p>
+
+
+        <a
+            class="action"
+            href="/teacher/download/{{ selected_submission['id'] }}"
+        >
+            ⬇ Download Detailed Teacher PDF
+        </a>
+
+
+        {% if comparisons %}
+
+        <div class="comparison-grid">
+
+            {% for c in comparisons %}
+
+            <div class="comparison-card">
+
+                <h3>
+                    👤 {{ c.student_name }}
+                </h3>
+
+                <div class="comparison-score">
+                    {{ c.score }}%
+                </div>
+
+                <p>
+                    TF-IDF:
+                    <strong>
+                        {{ c.tfidf }}%
+                    </strong>
+                </p>
+
+                <p>
+                    AI Semantic:
+                    <strong>
+                        {{ c.semantic }}%
+                    </strong>
+                </p>
+
+                <span class="pill">
+                    {{ c.classification }}
+                </span>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <p class="muted">
+            No other students have submitted this assignment yet.
+        </p>
+
+        {% endif %}
+
+    </section>
+
+    {% endif %}
+
+
+    <!-- =========================
+         STUDENT TABLE
+    ========================== -->
+
+    <section class="card">
+
+        <h2>
+            📋 Student Submissions
+        </h2>
+
+        <div
+            style="
+                display:flex;
+                gap:10px;
+                margin:15px 0;
+                flex-wrap:wrap;
+            "
+        >
+
+            <input
+                id="search"
+                type="text"
+                placeholder="Search student or assignment..."
+                oninput="filterStudents()"
+                style="flex:1; min-width:250px;"
+            >
+
+
+            <form
+                action="/teacher/delete-all"
+                method="POST"
+                onsubmit="return confirm('Delete ALL student submissions?')"
+            >
+
+                <button class="delete" type="submit">
+                    Delete All
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table id="studentTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Student
+                        </th>
+
+                        <th>
+                            Assignment
+                        </th>
+
+                        <th>
+                            Similarity
+                        </th>
+
+                        <th>
+                            Risk
+                        </th>
+
+                        <th>
+                            Best Match
+                        </th>
+
+                        <th>
+                            Date
+                        </th>
+
+                        <th>
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                {% for s in submissions %}
+
+                    <tr
+                        class="{% if selected_submission and selected_submission['id'] == s['id'] %}selected-student{% endif %}"
+                    >
+
+                        <td>
+
+                            {{ s["student_name"] }}
+
+                            {% if selected_submission and selected_submission["id"] == s["id"] %}
+
+                                <span class="selected-badge">
+                                    SELECTED
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td>
+                            {{ s["assignment_name"] }}
+                        </td>
+
+
+                        <td>
+                            {{ s["similarity_score"] }}%
+                        </td>
+
+
+                        <td>
+                            {{ s["classification"] }}
+                        </td>
+
+
+                        <td>
+                            {{ s["best_match_student"] or "—" }}
+                        </td>
+
+
+                        <td>
+                            {{ s["created_at"] }}
+                        </td>
+
+
+                        <td>
+
+                            <a
+                                class="action"
+                                href="/teacher/compare/{{ s['id'] }}"
+                            >
+                                Compare
+                            </a>
+
+
+                            <a
+                                class="action"
+                                href="/teacher/download/{{ s['id'] }}"
+                            >
+                                PDF
+                            </a>
+
+
+                            <form
+                                action="/teacher/delete/{{ s['id'] }}"
+                                method="POST"
+                                style="display:inline"
+                                onsubmit="return confirm('Delete this submission?')"
+                            >
+
+                                <button
+                                    class="delete"
+                                    type="submit"
+                                >
+                                    Delete
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                {% else %}
+
+                    <tr>
+
+                        <td
+                            colspan="7"
+                            style="
+                                text-align:center;
+                                padding:35px;
+                                color:#94a3b8;
+                            "
+                        >
+
+                            No student submissions yet.
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script>
+
+function filterStudents() {
+
+    const search =
+        document
+        .getElementById("search")
+        .value
+        .toLowerCase();
+
+    const rows =
+        document.querySelectorAll(
+            "#studentTable tbody tr"
+        );
+
+    rows.forEach(function(row) {
+
+        const text =
+            row.textContent.toLowerCase();
+
+        if (text.includes(search)) {
+
+            row.style.display = "";
+
+        } else {
+
+            row.style.display = "none";
+
+        }
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>
